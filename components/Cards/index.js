@@ -46,17 +46,16 @@ function cardMaker(data) {
 
 axios.get("https://lambda-times-backend.herokuapp.com/articles")
     .then(response => {
-        let newVar = response.data.articles;
-        console.log(newVar);
-        for(let i = 0; i < newVar.length; i++) {
-            // goes over every object in the array called articles 
-            // i.e. "javascript", "bootstrap", "technology"
-            for(let x = 0; x < newVar[i].length; x++) {
-                let cards = document.querySelector('.cards-container');
-            // goes over every object in the array called articles[i]
-            // i.e. 0, 1, 2
-                cards.appendChild(cardMaker(newVar[i][x]));
-                console.log(newVar[i][x]);
+        let cards = document.querySelector('.cards-container');
+        let values = Object.values(response.data.articles);
+
+        for(let i = 0; i < values.length; i++) {
+            for(let x = 0; x < values[i].length; x++) {
+                cards.appendChild(cardMaker(values[i][x]));
             }
         }
+    })
+    .catch(err => {
+        console.log(err);
     });
+
